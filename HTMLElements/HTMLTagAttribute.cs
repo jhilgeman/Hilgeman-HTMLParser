@@ -9,7 +9,35 @@ namespace Hilgeman.HTMLElements
     public class HTMLTagAttribute
     {
         public string Name;
-        public string Value;
+        private string _Value;
+        public string Value
+        {
+            get
+            {
+                return _Value;
+            }
+            set
+            {
+                // Handle null values
+                if (value == null)
+                {
+                    _Value = value;
+                }
+                else
+                {
+                    // Remove surrounding quotes
+                    if ((value[0] == '"') || (value[0] == '\''))
+                    {
+                        _Value = value.Substring(1, value.Length - 2);
+                    }
+                    else
+                    {
+                        // Unquoted attribute value like colspan=2
+                        _Value = value;
+                    }
+                }
+            }
+        }
         public string QuoteChar;
         public int StartPosition;
         public int EndPosition;

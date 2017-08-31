@@ -8,9 +8,14 @@ namespace Hilgeman.HTMLElements
 {
     public class HTMLTag : DOMElement
     {
-        public static int Counter = 0;
         public static string[] SelfClosingTags = new string[] { "!DOCTYPE", "AREA", "BASE", "BR", "COL", "COMMAND", "EMBED", "HR", "IMG", "INPUT", "KEYGEN", "LINK", "META", "PARAM", "SOURCE", "TRACK", "WBR" };
-        public int ID;
+        public string ID
+        {
+            get
+            {
+                return GetAttributeValueByName("id");
+            }
+        }
         public string TagName;
         public bool SelfClosed = false;
         public bool IsClosingTag = false;
@@ -26,12 +31,22 @@ namespace Hilgeman.HTMLElements
 
         public HTMLTag(int startPosition) : base(ElementTypes.Tag, startPosition)
         {
-            ID = Counter++;
         }
 
         public void MarkEndPosition(int Position)
         {
             setEndPosition(Position);
+        }
+
+        public string GetAttributeValueByName(string attributeName, bool trimQuotes = true, string defaultValue = "")
+        {
+            HTMLTagAttribute attr = GetAttributeByName(attributeName, false);
+            if (attr == null) { return defaultValue; }
+            if(trimQuotes && (!string.IsNullOrEmpty(attr.QuoteChar)))
+            {
+                return attr.Value.Substring(1, attr.Value.Length - 2);
+            }
+            return attr.Value;
         }
 
         public HTMLTagAttribute GetAttributeByName(string attributeName, bool initializeAttributes = false)
@@ -56,10 +71,10 @@ namespace Hilgeman.HTMLElements
 
         public List<HTMLForm> FindAllForms()
         {
-            return this.FindAll("form", 0, false).Cast<HTMLForm>().ToList();
+            return this.FindAll("form", false, 0).Cast<HTMLForm>().ToList();
         }
 
-        public List<HTMLTag> FindAll(string tagName, int depth = 0, bool recurseIntoMatches = true)
+        public List<HTMLTag> FindAll(string tagName, bool recurseIntoMatches = true, int depth = 0)
         {
             // Initialize empty return
             List<HTMLTag> result = new List<HTMLTag>();
@@ -90,13 +105,13 @@ namespace Hilgeman.HTMLElements
                         // Recurse only if we've specified the flag (e.g. don't bother searching for <form> instead another <form>
                         if(recurseIntoMatches)
                         {
-                            result.AddRange(childTag.FindAll(tagName, depth + 1));
+                            result.AddRange(childTag.FindAll(tagName, recurseIntoMatches, depth + 1));
                         }
                     }
                     else
                     {
                         // Non-matching tag, recurse
-                        result.AddRange(childTag.FindAll(tagName, depth + 1));
+                        result.AddRange(childTag.FindAll(tagName, recurseIntoMatches, depth + 1));
                     }
                 }
             }

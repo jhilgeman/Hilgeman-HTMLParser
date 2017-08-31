@@ -7,6 +7,14 @@ namespace Hilgeman.HTMLElements
 {
     public class HTMLSelect : HTMLInput
     {
+        public override string InputType
+        {
+            get
+            {
+                return "select";
+            }
+        }
+
 
         public HTMLSelectOption GetSelectedOption()
         {

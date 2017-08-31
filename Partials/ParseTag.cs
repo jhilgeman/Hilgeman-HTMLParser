@@ -172,10 +172,11 @@ namespace Hilgeman
 
                                 // Advance to the next non-whitespace char (in case of space-separated values like 'foo = "bar"'
                                 nextNonWhitespaceChar = _indexOfNextNonWhitespaceChar(currentPosition);
-                                currentAttribute.Value = _readValue(currentPosition);
+                                string rawAttributeValue = _readValue(currentPosition);
+                                currentAttribute.Value = rawAttributeValue;
 
                                 // Advance position to end of the value
-                                currentPosition += currentAttribute.Value.Length;
+                                currentPosition += rawAttributeValue.Length;
                             }
                             else
                             {

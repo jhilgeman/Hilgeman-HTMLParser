@@ -7,6 +7,23 @@ namespace Hilgeman.HTMLElements
 {
     public class HTMLForm : HTMLTag
     {
+        public string Action
+        {
+            get
+            {
+                return GetAttributeValueByName("action");
+            }
+        }
+
+        public string Method
+        {
+            get
+            {
+                return GetAttributeValueByName("method");
+            }
+        }
+
+
         public List<HTMLInput> Inputs = new List<HTMLInput>();
         public List<HTMLInput> NamedInputs = new List<HTMLInput>();
 

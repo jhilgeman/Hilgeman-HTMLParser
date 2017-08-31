@@ -7,6 +7,14 @@ namespace Hilgeman.HTMLElements
 {
     public class HTMLTextarea : HTMLInput
     {
+        public override string InputType
+        {
+            get
+            {
+                return "textarea";
+            }
+        }
+
         public override string Value
         {
             get

@@ -16,12 +16,23 @@ namespace Hilgeman.HTMLElements
         {
             get
             {
-                HTMLTagAttribute attr = GetAttributeByName("name");
-                if (attr != null)
-                {
-                    return attr.Value;
-                }
-                return null;
+                return GetAttributeValueByName("name");
+            }
+        }
+
+        public virtual string InputType
+        {
+            get
+            {
+                return GetAttributeValueByName("type");
+            }
+        }
+
+        public bool Checked
+        {
+            get
+            {
+                return (GetAttributeByName("checked") != null);
             }
         }
 
@@ -29,12 +40,7 @@ namespace Hilgeman.HTMLElements
         {
             get
             {
-                HTMLTagAttribute attr = GetAttributeByName("value");
-                if(attr != null)
-                {
-                    return attr.Value;
-                }
-                return null;
+                return GetAttributeValueByName("value");
             }
 
             set
