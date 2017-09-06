@@ -204,7 +204,10 @@ namespace Hilgeman
                         tag.TagName = tag.TagName.ToLower();
                         foreach(HTMLTagAttribute attr in tag.Attributes)
                         {
-                            attr.Name = attr.Name.ToLower();
+                            if (attr.Name != null)
+                            {
+                                attr.Name = attr.Name.ToLower();
+                            }
                         }
                     }
                     else if (_transforms == Transformations.UppercaseNames)
@@ -212,7 +215,10 @@ namespace Hilgeman
                         tag.TagName = tag.TagName.ToUpper();
                         foreach (HTMLTagAttribute attr in tag.Attributes)
                         {
-                            attr.Name = attr.Name.ToUpper();
+                            if (attr.Name != null)
+                            {
+                                attr.Name = attr.Name.ToUpper();
+                            }
                         }
                     }
 

@@ -71,7 +71,7 @@ namespace Hilgeman.HTMLElements
 
         public List<HTMLForm> FindAllForms()
         {
-            return this.FindAll("form", false, 0).Cast<HTMLForm>().ToList();
+            return this.FindAll("form", true, 0).Cast<HTMLForm>().ToList();
         }
 
         public List<HTMLTag> FindAll(string tagName, bool recurseIntoMatches = true, int depth = 0)
